@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven "MAVEN3"      // Confirm this name in Jenkins > Global Tool Configuration
+        maven "M3"      // Confirm this name in Jenkins > Global Tool Configuration
         jdk "JDK11"         // Changed from OracleJDK8 → JDK11
     }
 
