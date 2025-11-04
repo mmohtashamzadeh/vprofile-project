@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         registryCredential = 'dockerhub' // Docker Hub credentials ID in Jenkins
-        appRegistry = "mmohtashamzadeh/vprofileCICD"
+        appRegistry = "mmohtashamzadeh/vprofilecicd"
         dockerHubRegistry = "https://index.docker.io/v1/"
     }
 
