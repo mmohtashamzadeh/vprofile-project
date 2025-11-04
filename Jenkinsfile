@@ -38,10 +38,11 @@ pipeline {
 
         stage('Code Analysis with SonarQube') {
             environment {
-                scannerHome = tool 'SonarQube' // update this to your Sonar Scanner name in Jenkins
+                scannerHome = tool 'sonar-scanner' // update this to your Sonar Scanner name in Jenkins
             }
             steps {
                 withSonarQubeEnv(‘SonarQube’) { // Name must match Jenkins SonarQube server config
+                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
                     sh """
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=vprofile \
@@ -50,10 +51,11 @@ pipeline {
                         -Dsonar.sources=src/ \
                         -Dsonar.java.binaries=target \
                         -Dsonar.host.url=http://192.168.238.141:9000 \
-                        -Dsonar.login=\$sonarqube-token
+                        -Dsonar.login=\$SONAR_TOKEN
                     """
                 }
             }
+        }
         }
 
         stage("SonarQube Quality Gate") {
