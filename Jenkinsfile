@@ -2,20 +2,33 @@ pipeline {
     agent any
 
     tools {
-        maven "M3"      // Confirm this name in Jenkins > Global Tool Configuration
-        jdk "JDK11"         // Changed from OracleJDK8 → JDK11
+        maven "M3"         // Maven configured in Jenkins
+        jdk "JDK11"        // JDK configured in Jenkins
     }
 
     environment {
-        registryCredential = 'dockerhub' // Docker Hub credentials ID in Jenkins
-        appRegistry = "mmohtashamzadeh/vprofilecicd"
+        registryCredential = 'dockerhub'  // Docker Hub credentials ID
+        appRegistry = "mmohtashamzadeh/vprofileCICD"
         dockerHubRegistry = "https://index.docker.io/v1/"
     }
 
     stages {
-        stage('Fetch code') {
+
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
+        stage('Checkout Code') {
             steps {
                 git branch: 'docker', url: 'https://github.com/devopshydclub/vprofile-project.git'
+            }
+        }
+
+        stage('Show Dockerfile') {
+            steps {
+                sh 'cat ./Docker-files/app/multistage/Dockerfile'
             }
         }
 
@@ -25,7 +38,7 @@ pipeline {
             }
         }
 
-        stage ('Code Analysis with Checkstyle') {
+        stage('Code Analysis with Checkstyle') {
             steps {
                 sh 'mvn checkstyle:checkstyle'
             }
@@ -36,45 +49,6 @@ pipeline {
             }
         }
 
-//        stage('Code Analysis with SonarQube') {
-  //          environment {
-    //            scannerHome = tool 'sonar-scanner' // update this to your Sonar Scanner name in Jenkins
-      //      }
-        //    steps {
-          //      withSonarQubeEnv('SonarQube') { // Name must match Jenkins SonarQube server config
-            //        withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-              //          sh """
-                //            ${scannerHome}/bin/sonar-scanner \
-                  //          -Dsonar.projectKey=vprofile \
-                    //        -Dsonar.projectName=vprofile-repo \
-                      //      -Dsonar.projectVersion=1.0 \
-                        //    -Dsonar.sources=src/ \
-//                            -Dsonar.java.binaries=target \
-  //                          -Dsonar.host.url=http://192.168.238.141:9000 \
-    //                        -Dsonar.login=\$SONAR_TOKEN
-      //                  """
-        //            }
-          //      }
-            //}
-        //}
-
-//        stage("SonarQube Quality Gate") {
-  //          steps {
-    //            timeout(time: 1, unit: 'HOURS') {
-      //              waitForQualityGate abortPipeline: true
-        //        }
-          //  }
-        //}
-stage('Clean Workspace') {
-    steps {
-        deleteDir() // clears workspace
-    }
-}
-        stage('Fetch code2') {
-    steps {
-        git branch: 'docker', url: 'https://github.com/devopshydclub/vprofile-project.git'
-    }
-}
         stage('Docker Build Image') {
             steps {
                 script {
@@ -93,5 +67,6 @@ stage('Clean Workspace') {
                 }
             }
         }
+
     }
 }
