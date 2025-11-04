@@ -65,7 +65,11 @@ pipeline {
         //        }
           //  }
         //}
-
+stage('Clean Workspace') {
+    steps {
+        deleteDir() // clears workspace
+    }
+}
         stage('Docker Build Image') {
             steps {
                 script {
