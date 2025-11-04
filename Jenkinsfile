@@ -41,21 +41,21 @@ pipeline {
                 scannerHome = tool 'sonar-scanner' // update this to your Sonar Scanner name in Jenkins
             }
             steps {
-                withSonarQubeEnv(‘SonarQube’) { // Name must match Jenkins SonarQube server config
+                withSonarQubeEnv('SonarQube') { // Name must match Jenkins SonarQube server config
                     withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-                    sh """
-                        ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=vprofile \
-                        -Dsonar.projectName=vprofile-repo \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=src/ \
-                        -Dsonar.java.binaries=target \
-                        -Dsonar.host.url=http://192.168.238.141:9000 \
-                        -Dsonar.login=\$SONAR_TOKEN
-                    """
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=vprofile \
+                            -Dsonar.projectName=vprofile-repo \
+                            -Dsonar.projectVersion=1.0 \
+                            -Dsonar.sources=src/ \
+                            -Dsonar.java.binaries=target \
+                            -Dsonar.host.url=http://192.168.238.141:9000 \
+                            -Dsonar.login=\$SONAR_TOKEN
+                        """
+                    }
                 }
             }
-        }
         }
 
         stage("SonarQube Quality Gate") {
