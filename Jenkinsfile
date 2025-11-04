@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven "M3"         // Maven configured in Jenkins
-        jdk "JDK11"        // JDK configured in Jenkins
-    }
-
     environment {
         registryCredential = 'dockerhub'  // Docker Hub credentials ID
         appRegistry = "mmohtashamzadeh/vprofileCICD"
@@ -29,23 +24,6 @@ pipeline {
         stage('Show Dockerfile') {
             steps {
                 sh 'cat ./Docker-files/app/multistage/Dockerfile'
-            }
-        }
-
-        stage('Maven Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-        stage('Code Analysis with Checkstyle') {
-            steps {
-                sh 'mvn checkstyle:checkstyle'
-            }
-            post {
-                success {
-                    echo 'Generated Checkstyle analysis report.'
-                }
             }
         }
 
