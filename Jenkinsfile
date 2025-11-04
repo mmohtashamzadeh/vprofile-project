@@ -70,7 +70,7 @@ stage('Clean Workspace') {
         deleteDir() // clears workspace
     }
 }
-        stage('Fetch code') {
+        stage('Fetch code2') {
     steps {
         git branch: 'docker', url: 'https://github.com/devopshydclub/vprofile-project.git'
     }
