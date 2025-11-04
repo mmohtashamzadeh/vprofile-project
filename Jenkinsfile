@@ -70,6 +70,11 @@ stage('Clean Workspace') {
         deleteDir() // clears workspace
     }
 }
+        stage('Fetch code') {
+    steps {
+        git branch: 'docker', url: 'https://github.com/devopshydclub/vprofile-project.git'
+    }
+}
         stage('Docker Build Image') {
             steps {
                 script {
