@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         registryCredential = 'dockerhub'  // Docker Hub credentials ID
-        appRegistry = "mohtashamzadeh/vprofilecicd"
+        appRegistry = "mohtashamzadeh/vprofilecicd"        //this is the repository name in Dockerhub. Repository should be made manually in Dockerhub
         dockerHubRegistry = "https://index.docker.io/v1/"
     }
 
