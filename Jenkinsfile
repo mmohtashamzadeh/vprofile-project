@@ -9,15 +9,9 @@ pipeline {
 
     stages {
 
-        stage('Clean Workspace') {
-            steps {
-                deleteDir()
-            }
-        }
-
         stage('Checkout Code') {
             steps {
-                git branch: 'docker', url: 'https://github.com/devopshydclub/vprofile-project.git'
+                git branch: 'docker', url: 'https://github.com/mmohtashamzadeh/vprofile-project.git'
             }
         }
 
