@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         registryCredential = 'dockerhub'  // Docker Hub credentials ID
-        appRegistry = "mmohtashamzadeh/vprofilecicd"
+        appRegistry = "mohtashamzadeh/vprofilecicd"
         dockerHubRegistry = "https://index.docker.io/v1/"
     }
 
